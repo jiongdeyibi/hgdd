@@ -10,6 +10,16 @@ public class UploadFile extends BaseModel {
      *
      * @mbggenerated
      */
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     private String fileName;
 
     /**
@@ -33,7 +43,6 @@ public class UploadFile extends BaseModel {
      * This method returns the value of the database column PB_FILE.FILE_NAME
      *
      * @return the value of PB_FILE.FILE_NAME
-     *
      * @mbggenerated
      */
     public String getFileName() {
@@ -45,7 +54,6 @@ public class UploadFile extends BaseModel {
      * This method sets the value of the database column PB_FILE.FILE_NAME
      *
      * @param fileName the value for PB_FILE.FILE_NAME
-     *
      * @mbggenerated
      */
     public void setFileName(String fileName) {
@@ -57,7 +65,6 @@ public class UploadFile extends BaseModel {
      * This method returns the value of the database column PB_FILE.GROUP_NAME
      *
      * @return the value of PB_FILE.GROUP_NAME
-     *
      * @mbggenerated
      */
     public String getGroupName() {
@@ -69,7 +76,6 @@ public class UploadFile extends BaseModel {
      * This method sets the value of the database column PB_FILE.GROUP_NAME
      *
      * @param groupName the value for PB_FILE.GROUP_NAME
-     *
      * @mbggenerated
      */
     public void setGroupName(String groupName) {
@@ -81,7 +87,6 @@ public class UploadFile extends BaseModel {
      * This method returns the value of the database column PB_FILE.ACTUAL_NAME
      *
      * @return the value of PB_FILE.ACTUAL_NAME
-     *
      * @mbggenerated
      */
     public String getActualName() {
@@ -93,7 +98,6 @@ public class UploadFile extends BaseModel {
      * This method sets the value of the database column PB_FILE.ACTUAL_NAME
      *
      * @param actualName the value for PB_FILE.ACTUAL_NAME
-     *
      * @mbggenerated
      */
     public void setActualName(String actualName) {
@@ -138,9 +142,9 @@ public class UploadFile extends BaseModel {
         }
         UploadFile other = (UploadFile) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getFileName() == null ? other.getFileName() == null : this.getFileName().equals(other.getFileName()))
-            && (this.getGroupName() == null ? other.getGroupName() == null : this.getGroupName().equals(other.getGroupName()))
-            && (this.getActualName() == null ? other.getActualName() == null : this.getActualName().equals(other.getActualName()));
+                && (this.getFileName() == null ? other.getFileName() == null : this.getFileName().equals(other.getFileName()))
+                && (this.getGroupName() == null ? other.getGroupName() == null : this.getGroupName().equals(other.getGroupName()))
+                && (this.getActualName() == null ? other.getActualName() == null : this.getActualName().equals(other.getActualName()));
     }
 
     /**

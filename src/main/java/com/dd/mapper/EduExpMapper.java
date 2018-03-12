@@ -5,7 +5,7 @@ import com.dd.entity.EduExp;
 
 import java.util.List;
 
-public interface EduExpMapper extends BaseMapper<EduExp>{
+public interface EduExpMapper extends BaseMapper<EduExp> {
 
     List listByEmployeeId(String employeeId);
 }

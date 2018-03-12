@@ -6,6 +6,6 @@ import com.dd.service.OutSuperviseService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OutSuperviseServiceImpl extends  BaseServiceImpl<OutSupervise> implements OutSuperviseService{
+public class OutSuperviseServiceImpl extends BaseServiceImpl<OutSupervise> implements OutSuperviseService {
 
 }

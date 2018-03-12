@@ -11,15 +11,15 @@ public class ReportItemFile {
 
     private String reportItemId;
 
-    public ReportItemFile(){
-        this.attId= UUID.randomUUID().toString().replaceAll("-", "");
+    public ReportItemFile() {
+        this.attId = UUID.randomUUID().toString().replaceAll("-", "");
     }
+
     /**
      * @param fileType,filePath,reportItemId
-     *
      */
-    public ReportItemFile(String attId,String fileType, String filePath, String reportItemId) {
-        this.attId= attId;
+    public ReportItemFile(String attId, String fileType, String filePath, String reportItemId) {
+        this.attId = attId;
         this.fileType = fileType;
         this.filePath = filePath;
         this.reportItemId = reportItemId;

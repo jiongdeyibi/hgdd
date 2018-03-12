@@ -13,61 +13,61 @@ import java.util.Map;
 @Service
 @Transactional(readOnly = true)
 public class ReportItemFileServiceImpl implements IReportItemFileService {
-	
-	@Autowired
-	private ReportItemFileMapper mapper;
-	
-	@Override
-	public ReportItemFile selectByPrimaryKey(String id) {
-		return mapper.selectByPrimaryKey(id);
-	}
-	
-	@Override
-	@Transactional
-	public int create(ReportItemFile object) {
-		return mapper.insert(object);
-	}
-	
-	@Override
-	@Transactional
-	public int delete(String id) {
-		return mapper.deleteByPrimaryKey(id);
-	}
-	
-	@Override
-	@Transactional
-	public int update(ReportItemFile object) {
-		return mapper.updateByPrimaryKeySelective(object);
-	}
 
-	@Override
-	public List list(Map params, Map compareMap) {
-		return null;
-	}
+    @Autowired
+    private ReportItemFileMapper mapper;
 
-	@Override
-	public List listByReportItem(String reportItemId) {
-		return mapper.listByReportItem(reportItemId);
-	}
+    @Override
+    public ReportItemFile selectByPrimaryKey(String id) {
+        return mapper.selectByPrimaryKey(id);
+    }
 
-	@Override
-	public int batchCreate(List objectList) {
-		return 0;
-	}
+    @Override
+    @Transactional
+    public int create(ReportItemFile object) {
+        return mapper.insert(object);
+    }
 
-	@Override
-	public int batchUpdate(List objectList) {
-		return 0;
-	}
+    @Override
+    @Transactional
+    public int delete(String id) {
+        return mapper.deleteByPrimaryKey(id);
+    }
 
-	@Override
-	public int updateWithNull(ReportItemFile object) {
-		return 0;
-	}
-	
-	@Override
-	public int batchDelete(List objectList) {
-		return 0;
-	}
-	
+    @Override
+    @Transactional
+    public int update(ReportItemFile object) {
+        return mapper.updateByPrimaryKeySelective(object);
+    }
+
+    @Override
+    public List list(Map params, Map compareMap) {
+        return null;
+    }
+
+    @Override
+    public List listByReportItem(String reportItemId) {
+        return mapper.listByReportItem(reportItemId);
+    }
+
+    @Override
+    public int batchCreate(List objectList) {
+        return 0;
+    }
+
+    @Override
+    public int batchUpdate(List objectList) {
+        return 0;
+    }
+
+    @Override
+    public int updateWithNull(ReportItemFile object) {
+        return 0;
+    }
+
+    @Override
+    public int batchDelete(List objectList) {
+        return 0;
+    }
+
 }

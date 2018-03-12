@@ -1,14 +1,13 @@
 package com.dd.entity.entityBean;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.base.BaseModel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 public class CompanyExport {
     /**
-     *   @author
+     * @author
      */
 
     private String stockCode;
@@ -17,14 +16,14 @@ public class CompanyExport {
     private String legalRepr;
     private String busiLicense;
     private String orgCode;
-    private String creditCode ;
+    private String creditCode;
     private Double totlaStock;
-    private String unitStock ;
+    private String unitStock;
     private Double regCapital;
     private String unitCapital;
     private String busiScope;
-    @DateTimeFormat( pattern = "yyyy-MM-dd" )
-    @JSONField (format="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JSONField(format = "yyyy-MM-dd")
     private Date establishDate;
     private String regAddress1;
     private String regAddress2;

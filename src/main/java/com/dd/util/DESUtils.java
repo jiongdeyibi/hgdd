@@ -56,5 +56,6 @@ public class DESUtils {
         String encryptedPassword = getEncryptString(password);
         System.out.println(encryptedPassword);
         System.out.println(getDecryptString(encryptedPassword));
+        System.out.println(UUIDUtils.getUUID());
     }
 }

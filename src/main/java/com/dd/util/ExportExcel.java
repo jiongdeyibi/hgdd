@@ -1,23 +1,28 @@
 package com.dd.util;
 
-import java.io.*;
-import java.lang.reflect.*;
-import java.math.BigDecimal;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.text.SimpleDateFormat;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class ExportExcel<T> {
     protected final Logger logger = LogManager.getLogger(this.getClass());
-    protected final String XLS_TITLE="导出EXCEL文档";
-    protected final String DATE_PATTERN="yyyy-MM-dd";
+    protected final String XLS_TITLE = "导出EXCEL文档";
+    protected final String DATE_PATTERN = "yyyy-MM-dd";
 
     public void exportExcel(Collection<T> dataset, OutputStream out) {
 
@@ -147,7 +152,7 @@ public class ExportExcel<T> {
                     Method getMethod = tCls.getMethod(getMethodName, new Class[]{});
                     Object value = getMethod.invoke(t, new Object[]{});
                     //如果值为null则不进行下面的处理
-                    if(null==value){
+                    if (null == value) {
                         continue;
                     }
 

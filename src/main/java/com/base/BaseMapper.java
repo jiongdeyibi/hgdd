@@ -1,9 +1,9 @@
 package com.base;
 
+import com.github.pagehelper.Page;
+
 import java.util.List;
 import java.util.Map;
-
-import com.github.pagehelper.Page;
 
 public interface BaseMapper<T extends BaseModel> {
 

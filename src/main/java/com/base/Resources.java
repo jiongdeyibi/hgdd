@@ -1,25 +1,29 @@
 package com.base;
 
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.i18n.LocaleContextHolder;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.i18n.LocaleContextHolder;
-
 /**
  * 加载配置
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
 @PropertySource(value = {"classpath:i18n/messages*.properties"})
 public final class Resources {
-    /** 国际化信息 */
+    /**
+     * 国际化信息
+     */
     private static final Map<String, ResourceBundle> MESSAGES = new HashMap<String, ResourceBundle>();
 
-    /** 国际化信息 */
+    /**
+     * 国际化信息
+     */
     public static String getMessage(String key, Object... params) {
         Locale locale = LocaleContextHolder.getLocale();
         ResourceBundle message = MESSAGES.get(locale.getLanguage());
@@ -38,7 +42,9 @@ public final class Resources {
         return message.getString(key);
     }
 
-    /** 清除国际化信息 */
+    /**
+     * 清除国际化信息
+     */
     public static void flushMessage() {
         MESSAGES.clear();
     }

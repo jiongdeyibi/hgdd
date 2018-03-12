@@ -10,11 +10,11 @@ public class EduExp extends BaseModel {
     private String eduExpId;
 
     private String employeeId;
-    @DateTimeFormat( pattern = "yyyy-MM-dd" )
-    @JSONField(format="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JSONField(format = "yyyy-MM-dd")
     private Date startDate;
-    @DateTimeFormat( pattern = "yyyy-MM-dd" )
-    @JSONField(format="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JSONField(format = "yyyy-MM-dd")
     private Date endDate;
 
     private String school;

@@ -1,11 +1,10 @@
 package com.dd.service.impl;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.base.BaseServiceImpl;
 import com.dd.entity.UploadFile;
 import com.dd.service.UploadFileService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author ShenHuaJie
@@ -13,6 +12,6 @@ import com.dd.service.UploadFileService;
  */
 @Service
 @Transactional(readOnly = true)
-public class UploadFileServiceImpl extends BaseServiceImpl<UploadFile> implements UploadFileService {	
-	
+public class UploadFileServiceImpl extends BaseServiceImpl<UploadFile> implements UploadFileService {
+
 }

@@ -17,7 +17,7 @@ public class ReportItem {
         return reportItemId;
     }
 
-    public ReportItem(){
+    public ReportItem() {
         this.reportItemId = UUID.randomUUID().toString().replaceAll("-", "");
         this.status = "N";
     }

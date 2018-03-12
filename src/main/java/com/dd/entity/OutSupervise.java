@@ -1,9 +1,8 @@
 package com.dd.entity;
 
-import com.base.BaseMapper;
 import com.base.BaseModel;
 
-public class OutSupervise extends BaseModel{
+public class OutSupervise extends BaseModel {
     private String id;
 
     private String busiType;
@@ -132,5 +131,24 @@ public class OutSupervise extends BaseModel{
 
     public void setRectifyConclusion(String rectifyConclusion) {
         this.rectifyConclusion = rectifyConclusion == null ? null : rectifyConclusion.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "OutSupervise{" +
+                "id='" + id + '\'' +
+                ", busiType='" + busiType + '\'' +
+                ", datetime='" + datetime + '\'' +
+                ", checkName='" + checkName + '\'' +
+                ", checkInstitute='" + checkInstitute + '\'' +
+                ", checkObject='" + checkObject + '\'' +
+                ", problemInfo='" + problemInfo + '\'' +
+                ", superviseMeasure='" + superviseMeasure + '\'' +
+                ", rectifyClaim='" + rectifyClaim + '\'' +
+                ", rectifyStaff='" + rectifyStaff + '\'' +
+                ", rectifyTerm='" + rectifyTerm + '\'' +
+                ", rectifyStatus='" + rectifyStatus + '\'' +
+                ", rectifyConclusion='" + rectifyConclusion + '\'' +
+                '}';
     }
 }
