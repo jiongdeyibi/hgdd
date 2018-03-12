@@ -3,10 +3,22 @@
 <mapper namespace="com.dd.mapper.OutSuperviseMapper" >
   <resultMap id="BaseResultMap" type="com.dd.entity.OutSupervise" >
     <id column="ID" property="id" jdbcType="VARCHAR" />
-    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="VARCHAR" />
+    <result column="CHECK_NAME" property="checkName" jdbcType="VARCHAR" />
+    <result column="CHECK_INSTITUTE" property="checkInstitute" jdbcType="VARCHAR" />
+    <result column="CHECK_OBJECT" property="checkObject" jdbcType="VARCHAR" />
+    <result column="PROBLEM_INFO" property="problemInfo" jdbcType="VARCHAR" />
+    <result column="SUPERVISE_MEASURE" property="superviseMeasure" jdbcType="VARCHAR" />
+    <result column="RECTIFY_CLAIM" property="rectifyClaim" jdbcType="VARCHAR" />
+    <result column="RECTIFY_STAFF" property="rectifyStaff" jdbcType="VARCHAR" />
+    <result column="RECTIFY_TERM" property="rectifyTerm" jdbcType="VARCHAR" />
+    <result column="RECTIFY_STATUS" property="rectifyStatus" jdbcType="VARCHAR" />
+    <result column="RECTIFY_CONCLUSION" property="rectifyConclusion" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, TYPE
+    ID, BUSI_TYPE, DATETIME, CHECK_NAME, CHECK_INSTITUTE, CHECK_OBJECT, PROBLEM_INFO, 
+    SUPERVISE_MEASURE, RECTIFY_CLAIM, RECTIFY_STAFF, RECTIFY_TERM, RECTIFY_STATUS, RECTIFY_CONCLUSION
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -19,8 +31,16 @@
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.dd.entity.OutSupervise" >
-    insert into WEB05.T_OUT_SUPERVISE (ID, TYPE)
-    values (#{id,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
+    insert into WEB05.T_OUT_SUPERVISE (ID, BUSI_TYPE, DATETIME, 
+      CHECK_NAME, CHECK_INSTITUTE, CHECK_OBJECT, 
+      PROBLEM_INFO, SUPERVISE_MEASURE, RECTIFY_CLAIM, 
+      RECTIFY_STAFF, RECTIFY_TERM, RECTIFY_STATUS, 
+      RECTIFY_CONCLUSION)
+    values (#{id,jdbcType=VARCHAR}, #{busiType,jdbcType=VARCHAR}, #{datetime,jdbcType=VARCHAR}, 
+      #{checkName,jdbcType=VARCHAR}, #{checkInstitute,jdbcType=VARCHAR}, #{checkObject,jdbcType=VARCHAR}, 
+      #{problemInfo,jdbcType=VARCHAR}, #{superviseMeasure,jdbcType=VARCHAR}, #{rectifyClaim,jdbcType=VARCHAR}, 
+      #{rectifyStaff,jdbcType=VARCHAR}, #{rectifyTerm,jdbcType=VARCHAR}, #{rectifyStatus,jdbcType=VARCHAR}, 
+      #{rectifyConclusion,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dd.entity.OutSupervise" >
     insert into WEB05.T_OUT_SUPERVISE
@@ -28,31 +48,141 @@
       <if test="id != null" >
         ID,
       </if>
-      <if test="type != null" >
-        TYPE,
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="checkName != null" >
+        CHECK_NAME,
+      </if>
+      <if test="checkInstitute != null" >
+        CHECK_INSTITUTE,
+      </if>
+      <if test="checkObject != null" >
+        CHECK_OBJECT,
+      </if>
+      <if test="problemInfo != null" >
+        PROBLEM_INFO,
+      </if>
+      <if test="superviseMeasure != null" >
+        SUPERVISE_MEASURE,
+      </if>
+      <if test="rectifyClaim != null" >
+        RECTIFY_CLAIM,
+      </if>
+      <if test="rectifyStaff != null" >
+        RECTIFY_STAFF,
+      </if>
+      <if test="rectifyTerm != null" >
+        RECTIFY_TERM,
+      </if>
+      <if test="rectifyStatus != null" >
+        RECTIFY_STATUS,
+      </if>
+      <if test="rectifyConclusion != null" >
+        RECTIFY_CONCLUSION,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        #{type,jdbcType=VARCHAR},
+      <if test="busiType != null" >
+        #{busiType,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="checkName != null" >
+        #{checkName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkInstitute != null" >
+        #{checkInstitute,jdbcType=VARCHAR},
+      </if>
+      <if test="checkObject != null" >
+        #{checkObject,jdbcType=VARCHAR},
+      </if>
+      <if test="problemInfo != null" >
+        #{problemInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="superviseMeasure != null" >
+        #{superviseMeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyClaim != null" >
+        #{rectifyClaim,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyStaff != null" >
+        #{rectifyStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyTerm != null" >
+        #{rectifyTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyStatus != null" >
+        #{rectifyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyConclusion != null" >
+        #{rectifyConclusion,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.dd.entity.OutSupervise" >
     update WEB05.T_OUT_SUPERVISE
     <set >
-      <if test="type != null" >
-        TYPE = #{type,jdbcType=VARCHAR},
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="checkName != null" >
+        CHECK_NAME = #{checkName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkInstitute != null" >
+        CHECK_INSTITUTE = #{checkInstitute,jdbcType=VARCHAR},
+      </if>
+      <if test="checkObject != null" >
+        CHECK_OBJECT = #{checkObject,jdbcType=VARCHAR},
+      </if>
+      <if test="problemInfo != null" >
+        PROBLEM_INFO = #{problemInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="superviseMeasure != null" >
+        SUPERVISE_MEASURE = #{superviseMeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyClaim != null" >
+        RECTIFY_CLAIM = #{rectifyClaim,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyStaff != null" >
+        RECTIFY_STAFF = #{rectifyStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyTerm != null" >
+        RECTIFY_TERM = #{rectifyTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyStatus != null" >
+        RECTIFY_STATUS = #{rectifyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyConclusion != null" >
+        RECTIFY_CONCLUSION = #{rectifyConclusion,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dd.entity.OutSupervise" >
     update WEB05.T_OUT_SUPERVISE
-    set TYPE = #{type,jdbcType=VARCHAR}
+    set BUSI_TYPE = #{busiType,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=VARCHAR},
+      CHECK_NAME = #{checkName,jdbcType=VARCHAR},
+      CHECK_INSTITUTE = #{checkInstitute,jdbcType=VARCHAR},
+      CHECK_OBJECT = #{checkObject,jdbcType=VARCHAR},
+      PROBLEM_INFO = #{problemInfo,jdbcType=VARCHAR},
+      SUPERVISE_MEASURE = #{superviseMeasure,jdbcType=VARCHAR},
+      RECTIFY_CLAIM = #{rectifyClaim,jdbcType=VARCHAR},
+      RECTIFY_STAFF = #{rectifyStaff,jdbcType=VARCHAR},
+      RECTIFY_TERM = #{rectifyTerm,jdbcType=VARCHAR},
+      RECTIFY_STATUS = #{rectifyStatus,jdbcType=VARCHAR},
+      RECTIFY_CONCLUSION = #{rectifyConclusion,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
