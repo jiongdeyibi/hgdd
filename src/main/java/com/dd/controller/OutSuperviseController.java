@@ -1,7 +1,6 @@
 package com.dd.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.base.BaseController;
 import com.dd.entity.OutSupervise;
 import com.dd.entity.UploadFile;
@@ -18,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,9 +35,9 @@ public class OutSuperviseController extends BaseController {
 
     @RequestMapping(value = "/detail")
     public Object detail(@RequestParam(value = "id", required = false) String id, ModelMap modelMap) {
-        OutSuperviseBean record=service.selectBean(id);
-        Map<String, Object> uploadFileParams=new HashMap<>();
-        uploadFileParams.put("tableId",id);
+        OutSuperviseBean record = service.selectBean(id);
+        Map<String, Object> uploadFileParams = new HashMap<>();
+        uploadFileParams.put("tableId", id);
         List<UploadFile> uploadFileList = fileService.findByCondition(uploadFileParams);
         record.setUploadFileList(uploadFileList);
         return setSuccessModelMap(modelMap, record);
@@ -50,8 +47,8 @@ public class OutSuperviseController extends BaseController {
     public Object add(@RequestParam(value = "tempFiles", required = false) String tempFilesString, HttpServletRequest request, ModelMap modelMap) {
         OutSupervise record = Request2ModelUtil.covert(OutSupervise.class, request);
         record.setId(UUIDUtils.getUUID());
-        String[] tempFiles=JSON.parseObject(tempFilesString, String[].class);
-        service.insertWithFiles(record,tempFiles);
+        String[] tempFiles = JSON.parseObject(tempFilesString, String[].class);
+        service.insertWithFiles(record, tempFiles);
         return setSuccessModelMap(modelMap);
     }
 
@@ -72,8 +69,8 @@ public class OutSuperviseController extends BaseController {
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public Object list(HttpServletRequest request, ModelMap modelMap) {
         Map<String, Object> params = WebUtil.getParameterMap(request);
-        PageInfo<OutSupervise> list= service.findByPage(params);
-        return setSuccessModelMap(modelMap,list);
+        PageInfo<OutSupervise> list = service.findByPage(params);
+        return setSuccessModelMap(modelMap, list);
     }
 }
 

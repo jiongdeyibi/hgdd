@@ -40,6 +40,7 @@ public class UploadFileController extends BaseController {
 
     /**
      * 上传文件，主要用于编辑页面，此时表单已经创建好了，所以有tableId
+     *
      * @param file
      * @param tableId  表单的id
      * @param response
@@ -59,6 +60,7 @@ public class UploadFileController extends BaseController {
 
     /**
      * 上传文件，主要用于新建页面，此时表单尚未提交，所以没有tableId
+     *
      * @param file
      * @param response
      * @param modelMap
@@ -77,6 +79,7 @@ public class UploadFileController extends BaseController {
 
     /**
      * 下载文件
+     *
      * @param fileId
      * @return
      * @throws IOException
@@ -101,6 +104,7 @@ public class UploadFileController extends BaseController {
 
     /**
      * 删除文件，逻辑删除，传文件id
+     *
      * @param fileId
      * @param modelMap
      * @return
@@ -117,6 +121,7 @@ public class UploadFileController extends BaseController {
 
     /**
      * 保存文件公用方法
+     *
      * @param file
      * @param tableId
      * @return

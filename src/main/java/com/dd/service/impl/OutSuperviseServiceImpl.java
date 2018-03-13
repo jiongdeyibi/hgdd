@@ -25,7 +25,7 @@ public class OutSuperviseServiceImpl extends BaseServiceImpl<OutSupervise> imple
     @Override
     @Transactional
     public int insertWithFiles(OutSupervise record, String[] tempFiles) {
-        if (null!=tempFiles&&tempFiles.length>0) {
+        if (null != tempFiles && tempFiles.length > 0) {
             for (String str : tempFiles) {
                 UploadFile uploadFile = uploadFileMapper.selectByPrimaryKey(str);
                 uploadFile.setTableId(record.getId());

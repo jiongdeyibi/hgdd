@@ -5,7 +5,7 @@ import com.dd.entity.UploadFile;
 
 import java.util.List;
 
-public class OutSuperviseBean extends OutSupervise{
+public class OutSuperviseBean extends OutSupervise {
     private List<UploadFile> uploadFileList;
 
     public List<UploadFile> getUploadFileList() {

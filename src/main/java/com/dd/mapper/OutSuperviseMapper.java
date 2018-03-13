@@ -9,5 +9,6 @@ import java.util.Map;
 
 public interface OutSuperviseMapper extends BaseMapper<OutSupervise> {
     List listBean(Map<String, Object> params);
+
     OutSuperviseBean selectBean(String id);
 }

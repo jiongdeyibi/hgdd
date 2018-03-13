@@ -30,8 +30,8 @@ public class BaseServiceImpl<T extends BaseModel> implements BaseService<T> {
         int pageSize = params.get("pageSize") == null ? 10 : Integer.parseInt((String) params.get("pageSize"));
         String orderBy = params.get("orderBy") == null ? "" : params.get("orderBy").toString();
         if (StringUtils.isNotEmpty(orderBy)) {
-            PageHelper.startPage(pageNum, pageSize,orderBy);
-        }else{
+            PageHelper.startPage(pageNum, pageSize, orderBy);
+        } else {
             PageHelper.startPage(pageNum, pageSize);
         }
         return new PageInfo<T>(mapper.findByCondition(params));
