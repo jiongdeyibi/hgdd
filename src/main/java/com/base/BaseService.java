@@ -9,7 +9,6 @@ public interface BaseService<T extends BaseModel> {
 
     List<T> findByCondition(Map<String, Object> params);
 
-    //
     PageInfo<T> findByPage(Map<String, Object> params);
 
     int deleteByPrimaryKey(String id);
