@@ -55,7 +55,7 @@ public class ZipCompressor {
             ZipEntry entry = new ZipEntry(zipFileName + "/" + fileName);
             out.putNextEntry(entry);
             int count;
-            byte data[] = new byte[BUFFER];
+            byte[] data = new byte[BUFFER];
             while ((count = bis.read(data, 0, BUFFER)) != -1) {
                 out.write(data, 0, count);
             }
@@ -80,12 +80,6 @@ public class ZipCompressor {
     public static void main(String[] args) {
         String[] fileName = {"ldapconfig.properties"};
         String[] filePath = {"E:/ldapconfig.properties"};
-        //ZipCompressor.compress(fileName,filePath);
-//        ZipCompressor zc = new ZipCompressor("E:/resource.zip");
-//        String[] fileName={"王1.pdf","王2.doc"};
-//        String[] filePath={"/2016/11/5/158aea193f6b43b7abcc9ff41669c8db","/2016/11/5/158aea19306e86b84af01fb4744a728b"};
-//        zc.compress(fileName,filePath);    
-
 
         try {
             ZipInputStream Zin = new ZipInputStream(new FileInputStream(

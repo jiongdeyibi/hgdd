@@ -23,6 +23,7 @@ public class ExportExcel<T> {
     protected final Logger logger = LogManager.getLogger(this.getClass());
     protected final String XLS_TITLE = "导出EXCEL文档";
     protected final String DATE_PATTERN = "yyyy-MM-dd";
+    private static Pattern NUMBER_PATTERN = Pattern.compile("^//d+(//.//d+)?$");
 
     public void exportExcel(Collection<T> dataset, OutputStream out) {
 
@@ -189,8 +190,7 @@ public class ExportExcel<T> {
 
                     //如果不是图片数据，就利用正则表达式判断textValue是否全部由数字组成
                     if (textValue != null) {
-                        Pattern p = Pattern.compile("^//d+(//.//d+)?$");
-                        Matcher matcher = p.matcher(textValue);
+                        Matcher matcher = NUMBER_PATTERN.matcher(textValue);
                         if (matcher.matches()) {
                             //是数字当作double处理
                             cell.setCellValue(Double.parseDouble(textValue));
