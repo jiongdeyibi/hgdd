@@ -14,6 +14,7 @@ public class LoginException extends BaseException {
         super(message, e);
     }
 
+    @Override
     protected HttpCode getHttpCode() {
         return HttpCode.LOGIN_FAIL;
     }

@@ -24,6 +24,7 @@ public class IllegalParameterException extends BaseException {
         super(message, ex);
     }
 
+    @Override
     protected HttpCode getHttpCode() {
         return HttpCode.BAD_REQUEST;
     }

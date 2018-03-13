@@ -77,8 +77,8 @@ public abstract class BaseController {
         return ResponseEntity.ok(modelMap);
     }
 
-    protected Map<String, Map<String, String>> addDict(Map<String, Map<String, String>> dicts, String dict_index, Map<String, String> dict) {
-        dicts.put(dict_index, dict);
+    protected Map<String, Map<String, String>> addDict(Map<String, Map<String, String>> dicts, String dictIndex, Map<String, String> dict) {
+        dicts.put(dictIndex, dict);
         return dicts;
     }
 

@@ -86,7 +86,7 @@ public final class Request2ModelUtil {
                 } else {
                     thisValue = request.getParameter(thisName);
                 }
-                if (thisName.equals("ct_tzfw")) {
+                if ("ct_tzfw".equals(thisName)) {
                     //System.out.println("hello");
                 }
                 if (!methodParasSet.contains(thisName)) {
@@ -218,7 +218,7 @@ public final class Request2ModelUtil {
                     Object value = getMethod.invoke(paramObj);
                     Method setMethod = setMethod(field.getName(), o.getClass());
                     if (setMethod != null) {
-                        if (value != null && !value.toString().equals("")) {
+                        if (value != null && !"".equals(value.toString())) {
                             setMethod.invoke(o, value);
                         }
                     }

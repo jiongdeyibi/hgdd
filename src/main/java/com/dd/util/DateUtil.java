@@ -184,7 +184,7 @@ public final class DateUtil {
         end.set(Calendar.MILLISECOND, 0);
 
         long n = end.getTimeInMillis() - start.getTimeInMillis();
-        return (int) (n / (60 * 60 * 24 * 1000l));
+        return (int) (n / (60 * 60 * 24 * 1000L));
     }
 
     /**
@@ -251,8 +251,9 @@ public final class DateUtil {
         Calendar cal = Calendar.getInstance();
         cal.setTime(dt);
         int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
-        if (w < 0)
+        if (w < 0) {
             w = 0;
+        }
         return weekDays[w];
     }
 
