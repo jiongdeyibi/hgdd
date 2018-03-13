@@ -18,8 +18,9 @@ public class PropertyUtil {
 
     public static String getProperty(String para) {
         String value = defaultString(instance.prop.getProperty(para)).trim();
-        if (isBlank(value))
+        if (isBlank(value)) {
             logger.warn(format("Cannot find property %s", para));
+        }
         return value;
     }
 

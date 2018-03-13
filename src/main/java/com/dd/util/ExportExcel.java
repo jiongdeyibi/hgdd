@@ -137,7 +137,7 @@ public class ExportExcel<T> {
         while (it.hasNext()) {
             index++;
             row = sheet.createRow(index);
-            T t = (T) it.next();
+            T t = it.next();
 
             //利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
             Field[] fields = t.getClass().getDeclaredFields();
@@ -149,8 +149,8 @@ public class ExportExcel<T> {
                 String getMethodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
                 try {
                     Class tCls = t.getClass();
-                    Method getMethod = tCls.getMethod(getMethodName, new Class[]{});
-                    Object value = getMethod.invoke(t, new Object[]{});
+                    Method getMethod = tCls.getMethod(getMethodName);
+                    Object value = getMethod.invoke(t);
                     //如果值为null则不进行下面的处理
                     if (null == value) {
                         continue;

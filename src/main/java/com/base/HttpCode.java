@@ -58,7 +58,7 @@ public enum HttpCode {
 
     private final Integer value;
 
-    private HttpCode(Integer value) {
+    HttpCode(Integer value) {
         this.value = value;
     }
 

@@ -1,10 +1,16 @@
 package com.base;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional(readOnly = true)
@@ -13,23 +19,23 @@ public class BaseServiceImpl<T extends BaseModel> implements BaseService<T> {
     @Autowired
     private BaseMapper<T> mapper;
 
-//    @Override
-//    public List<T> findByCondition(Map<String, Object> params) {
-//        return mapper.findByCondition(params);
-//    }
+    @Override
+    public List<T> findByCondition(Map<String, Object> params) {
+        return mapper.findByCondition(params);
+    }
 
-//    @Override
-//    public PageInfo<T> findByPage(Map<String, Object> params) {
-//        int pageNum = params.get("pageNum") == null ? 1 : Integer.parseInt((String) params.get("pageNum"));
-//        int pageSize = params.get("pageSize") == null ? 10 : Integer.parseInt((String) params.get("pageSize"));
-//        String orderBy = params.get("orderBy") == null ? "" : params.get("orderBy").toString();
-//        if (StringUtils.isNotEmpty(orderBy)) {
-//            PageHelper.startPage(pageNum, pageSize,orderBy);
-//        }else{
-//            PageHelper.startPage(pageNum, pageSize);
-//        }
-//        return new PageInfo<T>(mapper.findByCondition(params));
-//    }
+    @Override
+    public PageInfo<T> findByPage(Map<String, Object> params) {
+        int pageNum = params.get("pageNum") == null ? 1 : Integer.parseInt((String) params.get("pageNum"));
+        int pageSize = params.get("pageSize") == null ? 10 : Integer.parseInt((String) params.get("pageSize"));
+        String orderBy = params.get("orderBy") == null ? "" : params.get("orderBy").toString();
+        if (StringUtils.isNotEmpty(orderBy)) {
+            PageHelper.startPage(pageNum, pageSize,orderBy);
+        }else{
+            PageHelper.startPage(pageNum, pageSize);
+        }
+        return new PageInfo<T>(mapper.findByCondition(params));
+    }
 
     @Override
     @Transactional

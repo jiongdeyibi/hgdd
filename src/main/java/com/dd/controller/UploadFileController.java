@@ -1,91 +1,135 @@
 package com.dd.controller;
 
+
 import com.base.BaseController;
-import com.base.HttpCode;
 import com.dd.entity.UploadFile;
 import com.dd.service.UploadFileService;
-import com.dd.util.UploadUtil;
+import com.dd.util.DateUtil;
+import com.dd.util.PropertyUtil;
+import com.dd.util.UUIDUtils;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Date;
 
 /**
- * 文件上传控制器
- *
- * @author ShenHuaJie
- * @version 2016年5月20日 下午3:11:42
+ * Created by Dtj on 2017/11/20.
  */
 @RestController
 @RequestMapping(value = "/uploadfile")
 public class UploadFileController extends BaseController {
-    @Autowired
-    private UploadFileService uploadFileService;
+    private static final String UPLOADED_FILE_PATH = PropertyUtil.getProperty("fileSavePath");
 
-    // 上传文件(支持批量)
-    @RequestMapping(value = "/file")
-    public Object uploadFile(MultipartHttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception {
+    @Autowired
+    UploadFileService service;
+
+    @RequestMapping(value = "/upload", consumes = "multipart/form-data", method = RequestMethod.POST)
+    public Object uploadFile(@RequestParam("file") CommonsMultipartFile[] file, @RequestParam(value = "tableId", required = false) String tableId, HttpServletResponse response, ModelMap modelMap) {
         response.setHeader("Access-Control-Allow-origin", "*");
         response.setContentType("text/html;charset=utf-8");
-        Map<String, String> fileNames = UploadUtil.uploadFile(request);
-        if (fileNames.size() > 0) {
-            List<UploadFile> files = new ArrayList<UploadFile>();
-            for (Entry<String, String> entry : fileNames.entrySet()) {
-                UploadFile uploadFile = new UploadFile();
-                uploadFile.setActualName(entry.getKey());
-                uploadFile.setId(entry.getValue());
-                uploadFile.setGroupName("");
-                uploadFile.setFileName(entry.getValue());
-                uploadFileService.insert(uploadFile);
-                files.add(uploadFile);
+        ArrayList<String> result = new ArrayList<>();
+        for (int i = 0; i < file.length; ++i) {
+            result.add(this.saveUploadFile(file[i], tableId));
+        }
+        return setSuccessModelMap(modelMap, result);
+    }
+
+    @RequestMapping(value = "/uploadtemp", consumes = "multipart/form-data", method = RequestMethod.POST)
+    public Object uploadFileTemp(@RequestParam("file") CommonsMultipartFile[] file,HttpServletResponse response, ModelMap modelMap) {
+        response.setHeader("Access-Control-Allow-origin", "*");
+        response.setContentType("text/html;charset=utf-8");
+        ArrayList<String> result = new ArrayList<>();
+        for (int i = 0; i < file.length; ++i) {
+            result.add(this.saveUploadFile(file[i], "temp"));
+        }
+        return setSuccessModelMap(modelMap, result);
+    }
+
+    @RequestMapping(value = "/download", method = RequestMethod.POST)
+    public ResponseEntity<byte[]> download(@RequestParam(value = "fileId", required = false) String fileId) throws IOException {
+        //通过fileId获取Attachment的保存路径
+        UploadFile uploadFile = service.selectByPrimaryKey(fileId);
+        File file = new File(UPLOADED_FILE_PATH + uploadFile.getDownloadPath());
+        if (!file.exists()) {
+            return null;
+        }
+        HttpHeaders headers = new HttpHeaders();
+        //将文件名字恢复为上传时的名字
+        String fileOriginalName = uploadFile.getFileName();
+        logger.info("download File:" + fileOriginalName);
+        fileOriginalName = URLEncoder.encode(fileOriginalName, "UTF-8").replaceAll("\\+", "%20").replaceAll("%28", "\\(").replaceAll("%29", "\\)").replaceAll("%3B", ";").replaceAll("%40", "@").replaceAll("%23", "\\#").replaceAll("%26", "\\&").replaceAll("%2C", "\\,");
+        headers.setContentDispositionFormData("attachment", fileOriginalName);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public Object delete(@RequestParam(value = "fileId", required = false) String fileId, ModelMap modelMap) {
+        UploadFile record = service.selectByPrimaryKey(fileId);
+        if (record != null) {
+            service.deleteByPrimaryKey(fileId);
+        }
+        logger.info("delete UploadFile:" + record.toString());
+        return setSuccessModelMap(modelMap);
+    }
+
+    /**
+     * 保存文件
+     * @param file
+     * @param tableId
+     * @return
+     */
+    public String saveUploadFile(CommonsMultipartFile file, String tableId) {
+        String result = null;
+        if (!file.isEmpty()) {
+            String path = UPLOADED_FILE_PATH;
+
+            File dir = new File(path);
+            if (!dir.exists()) {
+                dir.mkdirs();
+                logger.info("mkdir:" + dir);
             }
-            modelMap.put("files", files);
-            return setSuccessModelMap(modelMap);
+            String uuid = UUIDUtils.getUUID();
+            path = path + uuid;
+            //withoutPath:不带C盘路径的文件名
+            String originalFilename = file.getOriginalFilename();
+            File localFile = new File(path);
+            UploadFile uploadFile = new UploadFile();
+            uploadFile.setId(uuid);
+            uploadFile.setTableId(tableId);
+            uploadFile.setFileName(originalFilename);
+            uploadFile.setDownloadPath(uuid);
+            uploadFile.setUploadTime(DateUtil.format(new Date(), DateUtil.DATE_PATTERN.YYYY_MM_DD_HH_MM_SS));
+            service.insert(uploadFile);
+            try {
+                file.transferTo(localFile);
+                result = uuid;
+                logger.info("save upload files:" + path);
+            } catch (IllegalStateException | IOException e) {
+                logger.error("save upload files fail:");
+                e.printStackTrace();
+            }
+
         } else {
-            setModelMap(modelMap, HttpCode.BAD_REQUEST);
-            modelMap.put("msg", "请选择要上传的文件！");
-            return modelMap;
+            logger.info("empty file, do nothing:   " + file.getOriginalFilename());
         }
+        return result;
     }
 
-    @RequestMapping(value = "/down")
-    public String downloadFile(String fileId, HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception {
-        UploadFile file = uploadFileService.selectByPrimaryKey(fileId);
-        try {
-            String ctxPath = UploadUtil.uploadFileDir;
-            String downLoadPath = ctxPath + File.separator + file.getFileName();
-            //设置文件输出类型
-            InputStream is = new FileInputStream(downLoadPath);
-            OutputStream os = response.getOutputStream();
-            response.setCharacterEncoding("utf-8");
-            response.setContentType("multipart/form-data");
-            response.setHeader("Content-Disposition", "attachment;filename*=utf-8'zh_cn'" + URLEncoder.encode(file.getActualName(), "UTF-8"));
-            byte[] buff = new byte[2048];
-            int bytesRead;
-            while (-1 != (bytesRead = is.read(buff, 0, buff.length))) {
-                os.write(buff, 0, bytesRead);
-            }
-            //关闭流
-            is.close();
-            os.flush();
-            os.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-
-        }
-        return null;
-    }
 }

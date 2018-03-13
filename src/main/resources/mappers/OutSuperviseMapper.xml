@@ -16,6 +16,24 @@
     <result column="RECTIFY_STATUS" property="rectifyStatus" jdbcType="VARCHAR" />
     <result column="RECTIFY_CONCLUSION" property="rectifyConclusion" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="BeanResultMap" type="com.dd.entity.entityBean.OutSuperviseBean" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="VARCHAR" />
+    <result column="CHECK_NAME" property="checkName" jdbcType="VARCHAR" />
+    <result column="CHECK_INSTITUTE" property="checkInstitute" jdbcType="VARCHAR" />
+    <result column="CHECK_OBJECT" property="checkObject" jdbcType="VARCHAR" />
+    <result column="PROBLEM_INFO" property="problemInfo" jdbcType="VARCHAR" />
+    <result column="SUPERVISE_MEASURE" property="superviseMeasure" jdbcType="VARCHAR" />
+    <result column="RECTIFY_CLAIM" property="rectifyClaim" jdbcType="VARCHAR" />
+    <result column="RECTIFY_STAFF" property="rectifyStaff" jdbcType="VARCHAR" />
+    <result column="RECTIFY_TERM" property="rectifyTerm" jdbcType="VARCHAR" />
+    <result column="RECTIFY_STATUS" property="rectifyStatus" jdbcType="VARCHAR" />
+    <result column="RECTIFY_CONCLUSION" property="rectifyConclusion" jdbcType="VARCHAR" />
+    <result column="FILE_ID" property="fileId" jdbcType="VARCHAR" />
+    <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+    <result column="UPLOAD_TIME" property="uploadTime" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
     ID, BUSI_TYPE, DATETIME, CHECK_NAME, CHECK_INSTITUTE, CHECK_OBJECT, PROBLEM_INFO, 
     SUPERVISE_MEASURE, RECTIFY_CLAIM, RECTIFY_STAFF, RECTIFY_TERM, RECTIFY_STATUS, RECTIFY_CONCLUSION
@@ -25,6 +43,22 @@
     <include refid="Base_Column_List" />
     from WEB05.T_OUT_SUPERVISE
     where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="listBean" resultMap="BeanResultMap" parameterType="java.util.Map" >
+    select
+    t1.* ,t2.id as file_id ,t2.file_name as file_name ,t2.upload_time as upload_time
+    from WEB05.T_OUT_SUPERVISE t1
+    left join web05.t_upload_file t2
+    on t1.id=t2.table_id
+  </select>
+  <select id="findByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from WEB05.T_OUT_SUPERVISE where 1=1
+    <if test="busiType != null and busiType!=''"> and busi_type =#{busiType} </if>
+    <if test="datetime != null and datetime!=''"> and datetime =#{datetime} </if>
+    <if test="checkInstitute != null and checkInstitute!=''"> and check_institute =#{checkInstitute} </if>
+    <if test="rectifyStatus != null and rectifyStatus!=''"> and rectify_status =#{rectifyStatus} </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from WEB05.T_OUT_SUPERVISE
