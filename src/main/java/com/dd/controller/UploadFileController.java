@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +38,14 @@ public class UploadFileController extends BaseController {
     @Autowired
     UploadFileService service;
 
+    /**
+     * 上传文件，主要用于编辑页面，此时表单已经创建好了，所以有tableId
+     * @param file
+     * @param tableId  表单的id
+     * @param response
+     * @param modelMap
+     * @return
+     */
     @RequestMapping(value = "/upload", consumes = "multipart/form-data", method = RequestMethod.POST)
     public Object uploadFile(@RequestParam("file") CommonsMultipartFile[] file, @RequestParam(value = "tableId", required = false) String tableId, HttpServletResponse response, ModelMap modelMap) {
         response.setHeader("Access-Control-Allow-origin", "*");
@@ -50,8 +57,15 @@ public class UploadFileController extends BaseController {
         return setSuccessModelMap(modelMap, result);
     }
 
+    /**
+     * 上传文件，主要用于新建页面，此时表单尚未提交，所以没有tableId
+     * @param file
+     * @param response
+     * @param modelMap
+     * @return
+     */
     @RequestMapping(value = "/uploadtemp", consumes = "multipart/form-data", method = RequestMethod.POST)
-    public Object uploadFileTemp(@RequestParam("file") CommonsMultipartFile[] file,HttpServletResponse response, ModelMap modelMap) {
+    public Object uploadFileTemp(@RequestParam("file") CommonsMultipartFile[] file, HttpServletResponse response, ModelMap modelMap) {
         response.setHeader("Access-Control-Allow-origin", "*");
         response.setContentType("text/html;charset=utf-8");
         ArrayList<String> result = new ArrayList<>();
@@ -61,6 +75,12 @@ public class UploadFileController extends BaseController {
         return setSuccessModelMap(modelMap, result);
     }
 
+    /**
+     * 下载文件
+     * @param fileId
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value = "/download", method = RequestMethod.POST)
     public ResponseEntity<byte[]> download(@RequestParam(value = "fileId", required = false) String fileId) throws IOException {
         //通过fileId获取Attachment的保存路径
@@ -79,6 +99,12 @@ public class UploadFileController extends BaseController {
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
     }
 
+    /**
+     * 删除文件，逻辑删除，传文件id
+     * @param fileId
+     * @param modelMap
+     * @return
+     */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public Object delete(@RequestParam(value = "fileId", required = false) String fileId, ModelMap modelMap) {
         UploadFile record = service.selectByPrimaryKey(fileId);
@@ -90,7 +116,7 @@ public class UploadFileController extends BaseController {
     }
 
     /**
-     * 保存文件
+     * 保存文件公用方法
      * @param file
      * @param tableId
      * @return

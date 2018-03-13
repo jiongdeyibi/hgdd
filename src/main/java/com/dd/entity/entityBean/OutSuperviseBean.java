@@ -1,42 +1,18 @@
 package com.dd.entity.entityBean;
 
 import com.dd.entity.OutSupervise;
+import com.dd.entity.UploadFile;
+
+import java.util.List;
 
 public class OutSuperviseBean extends OutSupervise{
-    private String fileId;
-    private String fileName;
-    private String uploadTime;
+    private List<UploadFile> uploadFileList;
 
-    public String getFileId() {
-        return fileId;
+    public List<UploadFile> getUploadFileList() {
+        return uploadFileList;
     }
 
-    public void setFileId(String fileId) {
-        this.fileId = fileId;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getUploadTime() {
-        return uploadTime;
-    }
-
-    public void setUploadTime(String uploadTime) {
-        this.uploadTime = uploadTime;
-    }
-
-    @Override
-    public String toString() {
-        return "OutSuperviseBean{" +
-                "fileId='" + fileId + '\'' +
-                ", fileName='" + fileName + '\'' +
-                ", uploadTime='" + uploadTime + '\'' +
-                '}';
+    public void setUploadFileList(List<UploadFile> uploadFileList) {
+        this.uploadFileList = uploadFileList;
     }
 }

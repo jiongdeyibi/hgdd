@@ -1,7 +1,10 @@
 package com.dd.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.base.BaseController;
 import com.dd.entity.OutSupervise;
+import com.dd.entity.UploadFile;
 import com.dd.entity.entityBean.OutSuperviseBean;
 import com.dd.service.OutSuperviseService;
 import com.dd.service.UploadFileService;
@@ -20,6 +23,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -33,20 +37,21 @@ public class OutSuperviseController extends BaseController {
     private UploadFileService fileService;
 
     @RequestMapping(value = "/detail")
-    public Object detail(HttpServletRequest request, ModelMap modelMap) {
-        OutSupervise record = Request2ModelUtil.covert(OutSupervise.class, request);
-        record = service.selectByPrimaryKey(record.getId());
+    public Object detail(@RequestParam(value = "id", required = false) String id, ModelMap modelMap) {
+        OutSuperviseBean record=service.selectBean(id);
+        Map<String, Object> uploadFileParams=new HashMap<>();
+        uploadFileParams.put("tableId",id);
+        List<UploadFile> uploadFileList = fileService.findByCondition(uploadFileParams);
+        record.setUploadFileList(uploadFileList);
         return setSuccessModelMap(modelMap, record);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public Object add(@RequestParam(value = "tempFiles", required = false) String[] tempFiles, HttpServletRequest request, ModelMap modelMap) {
+    public Object add(@RequestParam(value = "tempFiles", required = false) String tempFilesString, HttpServletRequest request, ModelMap modelMap) {
         OutSupervise record = Request2ModelUtil.covert(OutSupervise.class, request);
         record.setId(UUIDUtils.getUUID());
-        service.insert(record);
-        if(tempFiles.length>0){
-            service.insertFiles(tempFiles,record.getId());
-        }
+        String[] tempFiles=JSON.parseObject(tempFilesString, String[].class);
+        service.insertWithFiles(record,tempFiles);
         return setSuccessModelMap(modelMap);
     }
 
