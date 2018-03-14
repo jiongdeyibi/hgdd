@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dd.mapper.UploadFileMapper" >
-  <resultMap id="BaseResultMap" type="com.dd.entity.UploadFile" >
-    <id column="ID" property="id" jdbcType="VARCHAR" />
-    <result column="TABLE_ID" property="tableId" jdbcType="VARCHAR" />
-    <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
-    <result column="DOWNLOAD_PATH" property="downloadPath" jdbcType="VARCHAR" />
-    <result column="UPLOAD_TIME" property="uploadTime" jdbcType="VARCHAR" />
-    <result column="UPLOAD_USER" property="uploadUser" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.dd.mapper.UploadFileMapper">
+    <resultMap id="BaseResultMap" type="com.dd.entity.UploadFile">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="TABLE_ID" property="tableId" jdbcType="VARCHAR"/>
+        <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR"/>
+        <result column="DOWNLOAD_PATH" property="downloadPath" jdbcType="VARCHAR"/>
+        <result column="UPLOAD_TIME" property="uploadTime" jdbcType="VARCHAR"/>
+        <result column="UPLOAD_USER" property="uploadUser" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     ID, TABLE_ID, FILE_NAME, DOWNLOAD_PATH, UPLOAD_TIME, UPLOAD_USER
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from WEB05.T_UPLOAD_FILE
-    where ID = #{id,jdbcType=VARCHAR}
-  </select>
-  <select id="findByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
-    select
-    <include refid="Base_Column_List" />
-    from WEB05.T_UPLOAD_FILE
-    where table_id = #{tableId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from WEB05.T_UPLOAD_FILE
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from WEB05.T_UPLOAD_FILE
+        where table_id = #{tableId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from WEB05.T_UPLOAD_FILE
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.dd.entity.UploadFile" >
+    <insert id="insert" parameterType="com.dd.entity.UploadFile">
     insert into WEB05.T_UPLOAD_FILE (ID, TABLE_ID, FILE_NAME, 
       DOWNLOAD_PATH, UPLOAD_TIME, UPLOAD_USER
       )
@@ -36,71 +36,71 @@
       #{downloadPath,jdbcType=VARCHAR}, #{uploadTime,jdbcType=VARCHAR}, #{uploadUser,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.dd.entity.UploadFile" >
-    insert into WEB05.T_UPLOAD_FILE
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        ID,
-      </if>
-      <if test="tableId != null" >
-        TABLE_ID,
-      </if>
-      <if test="fileName != null" >
-        FILE_NAME,
-      </if>
-      <if test="downloadPath != null" >
-        DOWNLOAD_PATH,
-      </if>
-      <if test="uploadTime != null" >
-        UPLOAD_TIME,
-      </if>
-      <if test="uploadUser != null" >
-        UPLOAD_USER,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="tableId != null" >
-        #{tableId,jdbcType=VARCHAR},
-      </if>
-      <if test="fileName != null" >
-        #{fileName,jdbcType=VARCHAR},
-      </if>
-      <if test="downloadPath != null" >
-        #{downloadPath,jdbcType=VARCHAR},
-      </if>
-      <if test="uploadTime != null" >
-        #{uploadTime,jdbcType=VARCHAR},
-      </if>
-      <if test="uploadUser != null" >
-        #{uploadUser,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dd.entity.UploadFile" >
-    update WEB05.T_UPLOAD_FILE
-    <set >
-      <if test="tableId != null" >
-        TABLE_ID = #{tableId,jdbcType=VARCHAR},
-      </if>
-      <if test="fileName != null" >
-        FILE_NAME = #{fileName,jdbcType=VARCHAR},
-      </if>
-      <if test="downloadPath != null" >
-        DOWNLOAD_PATH = #{downloadPath,jdbcType=VARCHAR},
-      </if>
-      <if test="uploadTime != null" >
-        UPLOAD_TIME = #{uploadTime,jdbcType=VARCHAR},
-      </if>
-      <if test="uploadUser != null" >
-        UPLOAD_USER = #{uploadUser,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.dd.entity.UploadFile" >
+    <insert id="insertSelective" parameterType="com.dd.entity.UploadFile">
+        insert into WEB05.T_UPLOAD_FILE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="tableId != null">
+                TABLE_ID,
+            </if>
+            <if test="fileName != null">
+                FILE_NAME,
+            </if>
+            <if test="downloadPath != null">
+                DOWNLOAD_PATH,
+            </if>
+            <if test="uploadTime != null">
+                UPLOAD_TIME,
+            </if>
+            <if test="uploadUser != null">
+                UPLOAD_USER,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="tableId != null">
+                #{tableId,jdbcType=VARCHAR},
+            </if>
+            <if test="fileName != null">
+                #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="downloadPath != null">
+                #{downloadPath,jdbcType=VARCHAR},
+            </if>
+            <if test="uploadTime != null">
+                #{uploadTime,jdbcType=VARCHAR},
+            </if>
+            <if test="uploadUser != null">
+                #{uploadUser,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.dd.entity.UploadFile">
+        update WEB05.T_UPLOAD_FILE
+        <set>
+            <if test="tableId != null">
+                TABLE_ID = #{tableId,jdbcType=VARCHAR},
+            </if>
+            <if test="fileName != null">
+                FILE_NAME = #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="downloadPath != null">
+                DOWNLOAD_PATH = #{downloadPath,jdbcType=VARCHAR},
+            </if>
+            <if test="uploadTime != null">
+                UPLOAD_TIME = #{uploadTime,jdbcType=VARCHAR},
+            </if>
+            <if test="uploadUser != null">
+                UPLOAD_USER = #{uploadUser,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.dd.entity.UploadFile">
     update WEB05.T_UPLOAD_FILE
     set TABLE_ID = #{tableId,jdbcType=VARCHAR},
       FILE_NAME = #{fileName,jdbcType=VARCHAR},

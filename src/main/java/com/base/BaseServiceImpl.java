@@ -1,5 +1,6 @@
 package com.base;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +22,9 @@ public class BaseServiceImpl<T extends BaseModel> implements BaseService<T> {
 
     @Override
     public List<T> findByCondition(Map<String, Object> params) {
-        return mapper.findByCondition(params);
+        Page<T> list = mapper.findByCondition(params);
+        logger.info("findByCondition:" + list);
+        return list;
     }
 
     @Override

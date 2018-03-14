@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dd.mapper.ComLetterMapper">
+    <resultMap id="BaseResultMap" type="com.dd.entity.ComLetter">
+        <id column="ID" property="id" jdbcType="VARCHAR"/>
+        <result column="LETTER_TYPE" property="letterType" jdbcType="VARCHAR"/>
+        <result column="DATETIME" property="datetime" jdbcType="VARCHAR"/>
+        <result column="WARNING_REASON" property="warningReason" jdbcType="VARCHAR"/>
+        <result column="WARNING_OBJECT" property="warningObject" jdbcType="VARCHAR"/>
+        <result column="TREAT_MEASURE" property="treatMeasure" jdbcType="VARCHAR"/>
+        <result column="FINISH_STATUS" property="finishStatus" jdbcType="VARCHAR"/>
+        <result column="OTHER_REMARK" property="otherRemark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, LETTER_TYPE, DATETIME, WARNING_REASON, WARNING_OBJECT, TREAT_MEASURE, FINISH_STATUS, 
+    OTHER_REMARK
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from WEB05.T_COMPLIANCE_LETTER
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="findByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from WEB05.T_COMPLIANCE_LETTER where 1=1
+        <if test="letterType != null and letterType!=''">and letter_type =#{letterType}</if>
+        <if test="datetime != null and datetime!=''">and datetime =#{datetime}</if>
+        <if test="warningObject != null and warningObject!=''">and warning_object =#{warningObject}</if>
+        <if test="finishStatus != null and finishStatus!=''">and finish_status =#{finishStatus}</if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from WEB05.T_COMPLIANCE_LETTER
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.dd.entity.ComLetter">
+    insert into WEB05.T_COMPLIANCE_LETTER (ID, LETTER_TYPE, DATETIME, 
+      WARNING_REASON, WARNING_OBJECT, TREAT_MEASURE, 
+      FINISH_STATUS, OTHER_REMARK)
+    values (#{id,jdbcType=VARCHAR}, #{letterType,jdbcType=VARCHAR}, #{datetime,jdbcType=VARCHAR}, 
+      #{warningReason,jdbcType=VARCHAR}, #{warningObject,jdbcType=VARCHAR}, #{treatMeasure,jdbcType=VARCHAR}, 
+      #{finishStatus,jdbcType=VARCHAR}, #{otherRemark,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.dd.entity.ComLetter">
+        insert into WEB05.T_COMPLIANCE_LETTER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="letterType != null">
+                LETTER_TYPE,
+            </if>
+            <if test="datetime != null">
+                DATETIME,
+            </if>
+            <if test="warningReason != null">
+                WARNING_REASON,
+            </if>
+            <if test="warningObject != null">
+                WARNING_OBJECT,
+            </if>
+            <if test="treatMeasure != null">
+                TREAT_MEASURE,
+            </if>
+            <if test="finishStatus != null">
+                FINISH_STATUS,
+            </if>
+            <if test="otherRemark != null">
+                OTHER_REMARK,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="letterType != null">
+                #{letterType,jdbcType=VARCHAR},
+            </if>
+            <if test="datetime != null">
+                #{datetime,jdbcType=VARCHAR},
+            </if>
+            <if test="warningReason != null">
+                #{warningReason,jdbcType=VARCHAR},
+            </if>
+            <if test="warningObject != null">
+                #{warningObject,jdbcType=VARCHAR},
+            </if>
+            <if test="treatMeasure != null">
+                #{treatMeasure,jdbcType=VARCHAR},
+            </if>
+            <if test="finishStatus != null">
+                #{finishStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="otherRemark != null">
+                #{otherRemark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.dd.entity.ComLetter">
+        update WEB05.T_COMPLIANCE_LETTER
+        <set>
+            <if test="letterType != null">
+                LETTER_TYPE = #{letterType,jdbcType=VARCHAR},
+            </if>
+            <if test="datetime != null">
+                DATETIME = #{datetime,jdbcType=VARCHAR},
+            </if>
+            <if test="warningReason != null">
+                WARNING_REASON = #{warningReason,jdbcType=VARCHAR},
+            </if>
+            <if test="warningObject != null">
+                WARNING_OBJECT = #{warningObject,jdbcType=VARCHAR},
+            </if>
+            <if test="treatMeasure != null">
+                TREAT_MEASURE = #{treatMeasure,jdbcType=VARCHAR},
+            </if>
+            <if test="finishStatus != null">
+                FINISH_STATUS = #{finishStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="otherRemark != null">
+                OTHER_REMARK = #{otherRemark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.dd.entity.ComLetter">
+    update WEB05.T_COMPLIANCE_LETTER
+    set LETTER_TYPE = #{letterType,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=VARCHAR},
+      WARNING_REASON = #{warningReason,jdbcType=VARCHAR},
+      WARNING_OBJECT = #{warningObject,jdbcType=VARCHAR},
+      TREAT_MEASURE = #{treatMeasure,jdbcType=VARCHAR},
+      FINISH_STATUS = #{finishStatus,jdbcType=VARCHAR},
+      OTHER_REMARK = #{otherRemark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
