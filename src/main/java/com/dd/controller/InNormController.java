@@ -2,10 +2,10 @@ package com.dd.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.base.BaseController;
-import com.dd.entity.OutSupervise;
+import com.dd.entity.InNorm;
 import com.dd.entity.UploadFile;
-import com.dd.entity.entityBean.OutSuperviseBean;
-import com.dd.service.OutSuperviseService;
+import com.dd.entity.entityBean.InNormBean;
+import com.dd.service.InNormService;
 import com.dd.service.UploadFileService;
 import com.dd.util.ExportExcel;
 import com.dd.util.Request2ModelUtil;
@@ -21,27 +21,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/outsupervise", method = RequestMethod.POST)
-public class OutSuperviseController extends BaseController {
+@RequestMapping(value = "/innorm", method = RequestMethod.POST)
+public class InNormController extends BaseController {
 
     @Autowired
-    private OutSuperviseService service;
+    private InNormService service;
 
     @Autowired
     private UploadFileService fileService;
 
     @RequestMapping(value = "/detail")
     public Object detail(@RequestParam(value = "id", required = false) String id, ModelMap modelMap) {
-        OutSuperviseBean record = service.selectBean(id);
+        InNormBean record = service.selectBean(id);
         Map<String, Object> uploadFileParams = new HashMap<>();
         uploadFileParams.put("tableId", id);
         List<UploadFile> uploadFileList = fileService.findByCondition(uploadFileParams);
@@ -51,7 +48,7 @@ public class OutSuperviseController extends BaseController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object add(@RequestParam(value = "tempFiles", required = false) String tempFilesString, HttpServletRequest request, ModelMap modelMap) {
-        OutSupervise record = Request2ModelUtil.covert(OutSupervise.class, request);
+        InNorm record = Request2ModelUtil.covert(InNorm.class, request);
         record.setId(UUIDUtils.getUUID());
         String[] tempFiles = JSON.parseObject(tempFilesString, String[].class);
         service.insertWithFiles(record, tempFiles);
@@ -60,14 +57,14 @@ public class OutSuperviseController extends BaseController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Object update(HttpServletRequest request, ModelMap modelMap) {
-        OutSupervise record = Request2ModelUtil.covert(OutSupervise.class, request);
+        InNorm record = Request2ModelUtil.covert(InNorm.class, request);
         service.updateByPrimaryKeySelective(record);
         return setSuccessModelMap(modelMap);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public Object delete(HttpServletRequest request, ModelMap modelMap) {
-        OutSupervise record = Request2ModelUtil.covert(OutSupervise.class, request);
+        InNorm record = Request2ModelUtil.covert(InNorm.class, request);
         service.deleteByPrimaryKey(record.getId());
         return setSuccessModelMap(modelMap);
     }
@@ -75,24 +72,24 @@ public class OutSuperviseController extends BaseController {
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public Object list(HttpServletRequest request, ModelMap modelMap) {
         Map<String, Object> params = WebUtil.getParameterMap(request);
-        PageInfo<OutSupervise> list = service.findByPage(params);
+        PageInfo<InNorm> list = service.findByPage(params);
         return setSuccessModelMap(modelMap, list);
     }
 
     @RequestMapping(value = "/excel", method = RequestMethod.GET)
     public void downloadall(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
-        String excelName="外部监管配合.xls";
-        String title="外部监管配合";
-        String[] headers = { "id", "业务类型", "时间", "检查名称", "检查机构", "检查对象", "问题描述","监管措施","整改要求或措施","整改对接部门/人员","整改期限","整改进度", "整改结论"};
-        ExportExcel<OutSupervise> ex = new ExportExcel<>();
-        List<OutSupervise> list =new ArrayList<>();
+        String excelName="内部合规检查.xls";
+        String title="内部合规检查";
+        String[] headers = { "id", "业务类型", "时间", "检查名称", "检查对象", "问题描述","整改要求或措施","整改对接部门/人员","整改期限","整改进度", "整改结论"};
+        ExportExcel<InNorm> ex = new ExportExcel<>();
+        List<InNorm> list =new ArrayList<>();
         list=service.findByCondition(new HashMap<String, Object>());
         //导出时将id修改为序号
         EXCEL_INDEX=1;
-        list.forEach((OutSupervise l)->{l.setId(String.valueOf(EXCEL_INDEX++));});
+        list.forEach((InNorm l)->{l.setId(String.valueOf(EXCEL_INDEX++));});
         setResponse(response,excelName);
         excuResponse(response,ex,title,headers,list);
-        logger.info("外部监管配合 excel导出成功！");
+        logger.info("内部合规检查 excel导出成功！");
 
     }
 }

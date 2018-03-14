@@ -5,6 +5,7 @@ package com.base;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.dd.util.ExportExcel;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -14,6 +15,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +29,10 @@ import java.util.Map;
  */
 public abstract class BaseController {
     protected final Logger logger = LogManager.getLogger(this.getClass());
+    /**
+     * 用于给导出excel表中的第一列设置编号
+     */
+    protected static Integer EXCEL_INDEX;
 
     /**
      * 设置成功响应代码
@@ -111,5 +120,40 @@ public abstract class BaseController {
         response.setContentType("application/json;charset=UTF-8");
         byte[] bytes = JSON.toJSONBytes(modelMap, SerializerFeature.DisableCircularReferenceDetect);
         response.getOutputStream().write(bytes);
+    }
+
+    /**
+     * 设置响应头
+     *
+     * @param response
+     * @param excelName 设置导出文件名
+     */
+    public void setResponse(HttpServletResponse response, String excelName) {
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("application/ms-excel");
+        try {
+            response.addHeader("Content-Disposition", "attachment;filename*=utf-8'zh_cn'" + URLEncoder.encode(excelName, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 执行导出流
+     *
+     * @param response
+     * @param ex           导出模板
+     * @param excelTitle   导出sheet页名
+     * @param excelHeaders 导出列头名
+     * @param list         导出的数据
+     */
+    public void excuResponse(HttpServletResponse response, ExportExcel ex, String excelTitle, String[] excelHeaders, List list) {
+        try {
+            OutputStream out = response.getOutputStream();
+            ex.exportExcel(excelTitle, excelHeaders, list, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+        }
     }
 }

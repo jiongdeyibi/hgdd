@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dd.mapper.InNormMapper" >
+  <resultMap id="BaseResultMap" type="com.dd.entity.InNorm" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BUSI_TYPE" property="busiType" jdbcType="VARCHAR" />
+    <result column="DATETIME" property="datetime" jdbcType="VARCHAR" />
+    <result column="CHECK_NAME" property="checkName" jdbcType="VARCHAR" />
+    <result column="CHECK_OBJECT" property="checkObject" jdbcType="VARCHAR" />
+    <result column="PROBLEM_INFO" property="problemInfo" jdbcType="VARCHAR" />
+    <result column="RECTIFY_CLAIM" property="rectifyClaim" jdbcType="VARCHAR" />
+    <result column="RECTIFY_STAFF" property="rectifyStaff" jdbcType="VARCHAR" />
+    <result column="RECTIFY_TERM" property="rectifyTerm" jdbcType="VARCHAR" />
+    <result column="RECTIFY_STATUS" property="rectifyStatus" jdbcType="VARCHAR" />
+    <result column="RECTIFY_CONCLUSION" property="rectifyConclusion" jdbcType="VARCHAR" />
+  </resultMap>
+    <resultMap id="BeanResultMap" type="com.dd.entity.entityBean.InNormBean" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="BUSI_TYPE" property="busiType" jdbcType="VARCHAR" />
+        <result column="DATETIME" property="datetime" jdbcType="VARCHAR" />
+        <result column="CHECK_NAME" property="checkName" jdbcType="VARCHAR" />
+        <result column="CHECK_OBJECT" property="checkObject" jdbcType="VARCHAR" />
+        <result column="PROBLEM_INFO" property="problemInfo" jdbcType="VARCHAR" />
+        <result column="RECTIFY_CLAIM" property="rectifyClaim" jdbcType="VARCHAR" />
+        <result column="RECTIFY_STAFF" property="rectifyStaff" jdbcType="VARCHAR" />
+        <result column="RECTIFY_TERM" property="rectifyTerm" jdbcType="VARCHAR" />
+        <result column="RECTIFY_STATUS" property="rectifyStatus" jdbcType="VARCHAR" />
+        <result column="RECTIFY_CONCLUSION" property="rectifyConclusion" jdbcType="VARCHAR" />
+    </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BUSI_TYPE, DATETIME, CHECK_NAME, CHECK_OBJECT, PROBLEM_INFO, RECTIFY_CLAIM, RECTIFY_STAFF, 
+    RECTIFY_TERM, RECTIFY_STATUS, RECTIFY_CONCLUSION
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WEB05.T_IN_NORM
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+    <select id="selectBean" resultMap="BeanResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from WEB05.T_IN_NORM
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="listBean" resultMap="BeanResultMap" parameterType="java.util.Map" >
+        select
+        <include refid="Base_Column_List" />
+        from WEB05.T_IN_NORM where 1=1
+        <if test="busiType != null and busiType!=''"> and busi_type =#{busiType} </if>
+        <if test="datetime != null and datetime!=''"> and datetime =#{datetime} </if>
+        <if test="checkObject != null and checkObject!=''"> and check_object =#{checkObject} </if>
+        <if test="rectifyStatus != null and rectifyStatus!=''"> and rectify_status =#{rectifyStatus} </if>
+    </select>
+  <select id="findByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from WEB05.T_IN_NORM where 1=1
+    <if test="busiType != null and busiType!=''"> and busi_type =#{busiType} </if>
+    <if test="datetime != null and datetime!=''"> and datetime =#{datetime} </if>
+    <if test="checkObject != null and checkObject!=''"> and check_object =#{checkObject} </if>
+    <if test="rectifyStatus != null and rectifyStatus!=''"> and rectify_status =#{rectifyStatus} </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from WEB05.T_IN_NORM
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dd.entity.InNorm" >
+    insert into WEB05.T_IN_NORM (ID, BUSI_TYPE, DATETIME, 
+      CHECK_NAME, CHECK_OBJECT, PROBLEM_INFO, 
+      RECTIFY_CLAIM, RECTIFY_STAFF, RECTIFY_TERM, 
+      RECTIFY_STATUS, RECTIFY_CONCLUSION)
+    values (#{id,jdbcType=VARCHAR}, #{busiType,jdbcType=VARCHAR}, #{datetime,jdbcType=VARCHAR}, 
+      #{checkName,jdbcType=VARCHAR}, #{checkObject,jdbcType=VARCHAR}, #{problemInfo,jdbcType=VARCHAR}, 
+      #{rectifyClaim,jdbcType=VARCHAR}, #{rectifyStaff,jdbcType=VARCHAR}, #{rectifyTerm,jdbcType=VARCHAR}, 
+      #{rectifyStatus,jdbcType=VARCHAR}, #{rectifyConclusion,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dd.entity.InNorm" >
+    insert into WEB05.T_IN_NORM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="busiType != null" >
+        BUSI_TYPE,
+      </if>
+      <if test="datetime != null" >
+        DATETIME,
+      </if>
+      <if test="checkName != null" >
+        CHECK_NAME,
+      </if>
+      <if test="checkObject != null" >
+        CHECK_OBJECT,
+      </if>
+      <if test="problemInfo != null" >
+        PROBLEM_INFO,
+      </if>
+      <if test="rectifyClaim != null" >
+        RECTIFY_CLAIM,
+      </if>
+      <if test="rectifyStaff != null" >
+        RECTIFY_STAFF,
+      </if>
+      <if test="rectifyTerm != null" >
+        RECTIFY_TERM,
+      </if>
+      <if test="rectifyStatus != null" >
+        RECTIFY_STATUS,
+      </if>
+      <if test="rectifyConclusion != null" >
+        RECTIFY_CONCLUSION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="checkName != null" >
+        #{checkName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkObject != null" >
+        #{checkObject,jdbcType=VARCHAR},
+      </if>
+      <if test="problemInfo != null" >
+        #{problemInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyClaim != null" >
+        #{rectifyClaim,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyStaff != null" >
+        #{rectifyStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyTerm != null" >
+        #{rectifyTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyStatus != null" >
+        #{rectifyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyConclusion != null" >
+        #{rectifyConclusion,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dd.entity.InNorm" >
+    update WEB05.T_IN_NORM
+    <set >
+      <if test="busiType != null" >
+        BUSI_TYPE = #{busiType,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        DATETIME = #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="checkName != null" >
+        CHECK_NAME = #{checkName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkObject != null" >
+        CHECK_OBJECT = #{checkObject,jdbcType=VARCHAR},
+      </if>
+      <if test="problemInfo != null" >
+        PROBLEM_INFO = #{problemInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyClaim != null" >
+        RECTIFY_CLAIM = #{rectifyClaim,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyStaff != null" >
+        RECTIFY_STAFF = #{rectifyStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyTerm != null" >
+        RECTIFY_TERM = #{rectifyTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyStatus != null" >
+        RECTIFY_STATUS = #{rectifyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="rectifyConclusion != null" >
+        RECTIFY_CONCLUSION = #{rectifyConclusion,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dd.entity.InNorm" >
+    update WEB05.T_IN_NORM
+    set BUSI_TYPE = #{busiType,jdbcType=VARCHAR},
+      DATETIME = #{datetime,jdbcType=VARCHAR},
+      CHECK_NAME = #{checkName,jdbcType=VARCHAR},
+      CHECK_OBJECT = #{checkObject,jdbcType=VARCHAR},
+      PROBLEM_INFO = #{problemInfo,jdbcType=VARCHAR},
+      RECTIFY_CLAIM = #{rectifyClaim,jdbcType=VARCHAR},
+      RECTIFY_STAFF = #{rectifyStaff,jdbcType=VARCHAR},
+      RECTIFY_TERM = #{rectifyTerm,jdbcType=VARCHAR},
+      RECTIFY_STATUS = #{rectifyStatus,jdbcType=VARCHAR},
+      RECTIFY_CONCLUSION = #{rectifyConclusion,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
