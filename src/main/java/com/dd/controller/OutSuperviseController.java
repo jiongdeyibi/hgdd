@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,19 +76,22 @@ public class OutSuperviseController extends BaseController {
         return setSuccessModelMap(modelMap, list);
     }
 
-    @RequestMapping(value = "/excel", method = RequestMethod.GET)
+    @RequestMapping(value = "/excel", method = RequestMethod.POST)
     public void downloadall(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
-        String excelName="外部监管配合.xls";
-        String title="外部监管配合";
-        String[] headers = { "id", "业务类型", "时间", "检查名称", "检查机构", "检查对象", "问题描述","监管措施","整改要求或措施","整改对接部门/人员","整改期限","整改进度", "整改结论"};
+        Map<String, Object> params = WebUtil.getParameterMap(request);
+        String excelName = "外部监管配合.xls";
+        String title = "外部监管配合";
+        String[] headers = {"id", "业务类型", "时间", "检查名称", "检查机构", "检查对象", "问题描述", "监管措施", "整改要求或措施", "整改对接部门/人员", "整改期限", "整改进度", "整改结论"};
         ExportExcel<OutSupervise> ex = new ExportExcel<>();
-        List<OutSupervise> list =new ArrayList<>();
-        list=service.findByCondition(new HashMap<String, Object>());
+        List<OutSupervise> list = new ArrayList<>();
+        list = service.findByCondition(params);
         //导出时将id修改为序号
-        EXCEL_INDEX=1;
-        list.forEach((OutSupervise l)->{l.setId(String.valueOf(EXCEL_INDEX++));});
-        setResponse(response,excelName);
-        excuResponse(response,ex,title,headers,list);
+        EXCEL_INDEX = 1;
+        list.forEach((OutSupervise l) -> {
+            l.setId(String.valueOf(EXCEL_INDEX++));
+        });
+        setResponse(response, excelName);
+        excuResponse(response, ex, title, headers, list);
         logger.info("外部监管配合 excel导出成功！");
 
     }

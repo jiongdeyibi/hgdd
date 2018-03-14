@@ -2,7 +2,7 @@ package com.dd.entity;
 
 import com.base.BaseModel;
 
-public class UploadFile extends BaseModel{
+public class UploadFile extends BaseModel {
     private String id;
 
     private String tableId;
