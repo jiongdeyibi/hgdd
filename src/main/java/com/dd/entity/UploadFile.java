@@ -2,7 +2,7 @@ package com.dd.entity;
 
 import com.base.BaseModel;
 
-public class UploadFile extends BaseModel {
+public class UploadFile extends BaseModel{
     private String id;
 
     private String tableId;
@@ -12,6 +12,8 @@ public class UploadFile extends BaseModel {
     private String downloadPath;
 
     private String uploadTime;
+
+    private String uploadUser;
 
     public String getId() {
         return id;
@@ -53,6 +55,14 @@ public class UploadFile extends BaseModel {
         this.uploadTime = uploadTime == null ? null : uploadTime.trim();
     }
 
+    public String getUploadUser() {
+        return uploadUser;
+    }
+
+    public void setUploadUser(String uploadUser) {
+        this.uploadUser = uploadUser == null ? null : uploadUser.trim();
+    }
+
     @Override
     public String toString() {
         return "UploadFile{" +
@@ -61,6 +71,7 @@ public class UploadFile extends BaseModel {
                 ", fileName='" + fileName + '\'' +
                 ", downloadPath='" + downloadPath + '\'' +
                 ", uploadTime='" + uploadTime + '\'' +
+                ", uploadUser='" + uploadUser + '\'' +
                 '}';
     }
 }

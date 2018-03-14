@@ -7,9 +7,10 @@
     <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
     <result column="DOWNLOAD_PATH" property="downloadPath" jdbcType="VARCHAR" />
     <result column="UPLOAD_TIME" property="uploadTime" jdbcType="VARCHAR" />
+    <result column="UPLOAD_USER" property="uploadUser" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, TABLE_ID, FILE_NAME, DOWNLOAD_PATH, UPLOAD_TIME
+    ID, TABLE_ID, FILE_NAME, DOWNLOAD_PATH, UPLOAD_TIME, UPLOAD_USER
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -29,9 +30,11 @@
   </delete>
   <insert id="insert" parameterType="com.dd.entity.UploadFile" >
     insert into WEB05.T_UPLOAD_FILE (ID, TABLE_ID, FILE_NAME, 
-      DOWNLOAD_PATH, UPLOAD_TIME)
+      DOWNLOAD_PATH, UPLOAD_TIME, UPLOAD_USER
+      )
     values (#{id,jdbcType=VARCHAR}, #{tableId,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, 
-      #{downloadPath,jdbcType=VARCHAR}, #{uploadTime,jdbcType=VARCHAR})
+      #{downloadPath,jdbcType=VARCHAR}, #{uploadTime,jdbcType=VARCHAR}, #{uploadUser,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.dd.entity.UploadFile" >
     insert into WEB05.T_UPLOAD_FILE
@@ -51,6 +54,9 @@
       <if test="uploadTime != null" >
         UPLOAD_TIME,
       </if>
+      <if test="uploadUser != null" >
+        UPLOAD_USER,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -67,6 +73,9 @@
       </if>
       <if test="uploadTime != null" >
         #{uploadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadUser != null" >
+        #{uploadUser,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -85,6 +94,9 @@
       <if test="uploadTime != null" >
         UPLOAD_TIME = #{uploadTime,jdbcType=VARCHAR},
       </if>
+      <if test="uploadUser != null" >
+        UPLOAD_USER = #{uploadUser,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
@@ -93,7 +105,8 @@
     set TABLE_ID = #{tableId,jdbcType=VARCHAR},
       FILE_NAME = #{fileName,jdbcType=VARCHAR},
       DOWNLOAD_PATH = #{downloadPath,jdbcType=VARCHAR},
-      UPLOAD_TIME = #{uploadTime,jdbcType=VARCHAR}
+      UPLOAD_TIME = #{uploadTime,jdbcType=VARCHAR},
+      UPLOAD_USER = #{uploadUser,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
